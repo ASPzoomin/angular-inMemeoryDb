@@ -1,0 +1,73 @@
+<div class="row">
+  <header class="col-md-12">
+    <nav class="navbar navbar-inverse">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <a class="navbar-brand">PwC Kolkata Resource Operations</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+</div>
+<section>
+  <div class="row">
+    <div class="col-md-6">
+      <form #f="ngForm">
+        <div class="form-group">
+          <input [(ngModel)]="myResource" name="myResource" type="text" class="form-control" placeholder="Add a Resource to organisation" required>
+        </div>
+        <p *ngIf="loading">
+          <i class="fa fa-spinner fa-spin"></i>
+        </p>
+        <div class="form-group">
+          <button class="btn btn-primary" [disabled]="!f.valid" (click)="create()">
+            Add Resource
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <table class="table table-hover">
+        <tr>
+          <th>S:No</th>
+          <th>Resources</th>
+          <th></th>
+        </tr>
+        <tr *ngFor="let resource of resources">
+          <td>{{resource.id}}</td>
+          <td>
+            <span *ngIf="!resource.editing"> <b>{{resource.name}}</b></span>
+            <div *ngIf="resource.editing">
+              <div class="form-group">
+                <input type="text" [(ngModel)]="resourceEdit.name" />
+              </div>
+              <div class="form-group">
+                <button class="btn btn-warning" (click)="saveEdit(resource)">
+                  Save
+                </button>
+              </div>
+            </div>
+          </td>
+          <td>
+            <button class="btn btn-success" [disabled]="editMode" (click)="edit(resource)">
+              <i class="fa fa-edit"></i>
+            </button>
+            <button class="btn btn-danger" [disabled]="editMode" (click)="delete(resource)">
+              <i class="fa fa-remove"></i>
+            </button>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</section>
+<div class="row">
+  <div class="col-md-6">
+    <input type="text" [(ngModel)]="employeeName" name="employeeName" class="form-control" placeholder="Search a name from our database">
+    <button class="btn btn-success" style="margin-top: 10px;" (click)="displaysearchedName($event)">Search</button>
+    <button class="btn btn-danger" style="margin-top: 10px;"(click)="clearData($event)">Clear</button>
+  </div>
+</div>
+<div *ngIf="isSearched">
+  <h3>{{employeename}}</h3>
+</div>
